@@ -1,23 +1,49 @@
 package jm.task.core.jdbc.util;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
+import java.util.Properties;
 
 public class Util {
-    private static final String URL = "jdbc:mysql://localhost:3306/preproj?serverTimezone=Europe/Moscow&useSSL=false";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "1121Regnomer1";
 
-    private static final String GET_ALL = "SELECT * FROM users";
-    private static final String DELETEALL = "DELETE FROM users";
+    private static Connection connection = null;
+    private static Util instance = null;
 
-
-    public Util() throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD); Statement statement = connection.createStatement()) {
-            if (!connection.isClosed()) System.out.println("Подключено");
-            } catch (SQLException e) {
-            System.out.println(e + " Не удалось подключиться");
-        }
-
-
+    public static Connection getConnection() {
+        return connection;
     }
+
+    private Util(){
+        try {
+            if (connection == null || connection.isClosed()) {
+                Properties properties = getProps();
+                connection = DriverManager.getConnection(properties.getProperty("url"), properties.getProperty("username"), properties.getProperty("password"));
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Util getInstance() {
+        if (instance == null) {
+            instance = new Util();
+        }
+        return instance;
+    }
+
+    private static Properties getProps() throws IOException {
+        Properties props = new Properties();
+        try (InputStream in = Files.newInputStream(Paths.get(Util.class.getResource("/database.properties").toURI()))) {
+            props.load(in);
+            return props;
+        } catch (IOException | URISyntaxException e) {
+            throw new IOException("Database config file not found", e);
+        }
+    }
+
+
 }
