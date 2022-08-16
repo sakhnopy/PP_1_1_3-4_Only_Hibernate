@@ -3,6 +3,7 @@ package jm.task.core.jdbc.model;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.List;
 
 @Table
 public class User {
@@ -61,6 +62,7 @@ public class User {
     }
     @Override
     public String toString() {
-        return String.format("User {id = '%s', name = '%s', lastname = '%s', age = '%s', age = '%d'}", getId(), getName(), getLastName(), getAge());
+        return String.format("User id = %s ||| name = %s ||| lastname = %s ||| age = %s",
+                getId(), getName(), getLastName(), getAge()) + "\n";
     }
 }
