@@ -1,5 +1,14 @@
 package jm.task.core.jdbc.util;
 
+import jm.task.core.jdbc.model.User;
+import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -12,8 +21,35 @@ import java.util.Properties;
 public class Util {
 
     private static Connection connection = null;
+    private static SessionFactory sessionFactory = null;
     private static Util instance = null;
 
+
+
+
+
+
+
+
+
+
+
+
+    public static SessionFactory getConnectionH() {
+
+        try {
+            Configuration configuration = new Configuration().addAnnotatedClass(User.class);
+
+            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                    .applySettings(configuration.getProperties()).build();
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return sessionFactory;
+    }
+
+    //JDBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
     public static Connection getConnection() {
         return connection;
     }
@@ -32,6 +68,7 @@ public class Util {
         }
     }
 
+
     public static Util getInstance() {
         if (instance == null) {
             instance = new Util();
@@ -49,7 +86,6 @@ public class Util {
             throw new IOException("Database config file not found", e);
         }
     }
-
 
 
 
