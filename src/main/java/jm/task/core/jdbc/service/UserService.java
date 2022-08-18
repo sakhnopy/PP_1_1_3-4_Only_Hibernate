@@ -5,7 +5,7 @@ import jm.task.core.jdbc.model.User;
 
 import java.util.List;
 
-public interface UserService extends UserDao {
+public interface UserService {
     void createUsersTable();
 
     void dropUsersTable();

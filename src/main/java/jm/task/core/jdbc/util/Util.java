@@ -1,14 +1,11 @@
 package jm.task.core.jdbc.util;
 
 import jm.task.core.jdbc.model.User;
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -25,17 +22,7 @@ public class Util {
     private static Util instance = null;
 
 
-
-
-
-
-
-
-
-
-
-
-    public static SessionFactory getConnectionH() {
+    public static SessionFactory getSessionFactory() {
 
         try {
             Configuration configuration = new Configuration().addAnnotatedClass(User.class);
@@ -49,7 +36,7 @@ public class Util {
         return sessionFactory;
     }
 
-    //JDBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+    //JDDDDDDDDDDDDDDDDDDDDDDDDDDBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCC
     public static Connection getConnection() {
         return connection;
     }
