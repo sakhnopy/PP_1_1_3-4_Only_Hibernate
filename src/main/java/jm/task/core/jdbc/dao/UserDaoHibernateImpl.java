@@ -1,10 +1,8 @@
 package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
-
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.*;
-
 
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
@@ -12,10 +10,10 @@ import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
     private final SessionFactory sessionFactory = Util.getSessionFactory();
+
     public UserDaoHibernateImpl() {
 
     }
-
 
 
     @Override
@@ -53,7 +51,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try {
             session.save(new User(name, lastName, age));
             transaction.commit();
-            System.out.println("Юзер c именем" + name + " Фамилией " + lastName + " возрастом " + age + " добавлен" );
+            System.out.println("Юзер c именем" + name + " Фамилией " + lastName + " возрастом " + age + " добавлен");
         } catch (HibernateException e) {
             e.printStackTrace();
             if (transaction != null) {
@@ -71,7 +69,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try {
             session.delete(session.get(User.class, id));
             transaction.commit();
-            System.out.println("Юзер c id " + id + " удален" );
+            System.out.println("Юзер c id " + id + " удален");
         } catch (HibernateException e) {
             e.printStackTrace();
             if (transaction != null) {
